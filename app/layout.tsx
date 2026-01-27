@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -15,37 +16,31 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "That's Whatsupp",
-  description: "Find supplements that fit you",
+  description: "Find supplements that fit you.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-50 text-zinc-950 dark:bg-black dark:text-zinc-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-50 text-zinc-900 overflow-x-hidden`}
       >
         {/* Top navigation */}
-        <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 backdrop-blur dark:border-white/10 dark:bg-black/80">
-          <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
-            <Link href="/" className="font-semibold tracking-tight">
+        <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white">
+          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+            <Link href="/" className="font-semibold tracking-tight text-zinc-900">
               That&apos;s Whatsupp
             </Link>
 
-            <nav className="flex items-center gap-6 text-sm text-zinc-600 dark:text-zinc-400">
-              <Link
-                href="/search"
-                className="hover:text-zinc-950 dark:hover:text-white"
-              >
+            <nav className="flex items-center gap-6 text-sm text-zinc-600">
+              <Link href="/search" className="hover:text-zinc-900">
                 Search
               </Link>
-              <Link
-                href="/chat"
-                className="hover:text-zinc-950 dark:hover:text-white"
-              >
+              <Link href="/chat" className="hover:text-zinc-900">
                 Chat
               </Link>
             </nav>
@@ -53,9 +48,7 @@ export default function RootLayout({
         </header>
 
         {/* Page content */}
-        <main className="mx-auto max-w-5xl px-6 py-10">
-          {children}
-        </main>
+        <main className="mx-auto max-w-6xl px-6 py-12">{children}</main>
       </body>
     </html>
   );
