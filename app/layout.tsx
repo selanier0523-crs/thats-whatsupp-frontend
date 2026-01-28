@@ -31,12 +31,12 @@ export default function RootLayout({
       >
         {/* Top navigation */}
         <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white">
-          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-0">
+          <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-1-ml-1">
          <img
            src="/logo.svg"
            alt="That's Whatsupp"
-           className="h-55 w-auto translate-y-2"
+           className="h-55 w-auto -ml-3 translate-y-2"
           />
        </Link>
 
