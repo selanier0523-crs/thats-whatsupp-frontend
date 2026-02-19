@@ -1,5 +1,7 @@
 // app/page.tsx
 import Link from "next/link";
+import FiltersTest from "./components/FiltersTest";
+
 
 function CheckItem({ children }: { children: React.ReactNode }) {
   return (
@@ -76,6 +78,9 @@ export default function Home() {
           <p className="mt-3 text-xs text-zinc-500">
             Coming soon: smarter filtering + product comparisons.
           </p>
+        <div className="mt-6">
+          <FiltersTest />
+        </div>
         </div>
 
         {/* Right: Panel */}
