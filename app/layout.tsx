@@ -34,7 +34,7 @@ export default function RootLayout({
           <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-1-ml-1">
          <img
-           src="/logo.svg"
+           src="./assets/icons/logo.svg"
            alt="That's Whatsupp"
            className="h-55 w-auto -ml-3.75 translate-y-2"
           />
