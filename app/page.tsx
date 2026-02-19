@@ -1,6 +1,6 @@
 // app/page.tsx
 import Link from "next/link";
-import FiltersTest from "./components/FiltersTest";
+import FiltersTest from "../components/FiltersTest";
 
 
 function CheckItem({ children }: { children: React.ReactNode }) {
