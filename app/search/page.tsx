@@ -107,6 +107,7 @@ export default function SearchPage() {
                   <FilterChip>Stress</FilterChip>
                   <FilterChip>Gut</FilterChip>
                   <FilterChip>Recovery</FilterChip>
+                  <FilterChip>Immunity</FilterChip>
                 </div>
               </FilterRow>
 
@@ -116,6 +117,7 @@ export default function SearchPage() {
                   <FilterChip>Powder</FilterChip>
                   <FilterChip>Gummy</FilterChip>
                   <FilterChip>Liquid</FilterChip>
+                  <FilterChip>Tablet</FilterChip>
                 </div>
               </FilterRow>
 
@@ -132,6 +134,22 @@ export default function SearchPage() {
                   <div className="flex items-center gap-2 text-sm text-zinc-700">
                     <input type="checkbox" className="h-4 w-4 accent-emerald-600" />
                     <span>Artificial sweeteners</span>
+                  </div>
+                  {/* Section Devider for "Allergens"*/}
+                  <div className="pt-3 text-sm font-medium text-zinc-900">
+                    Allergens
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-zinc-700">
+                    <input type="checkbox" className="h-4 w-4 accent-emerald-600" />
+                    <span>Dairy</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-zinc-700">
+                    <input type="checkbox" className="h-4 w-4 accent-emerald-600" />
+                    <span>Gluten</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-zinc-700">
+                    <input type="checkbox" className="h-4 w-4 accent-emerald-600" />
+                    <span>Soy</span>
                   </div>
                 </div>
               </FilterRow>
