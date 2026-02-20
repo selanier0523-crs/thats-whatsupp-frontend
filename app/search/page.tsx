@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { Range, getTrackBackground } from "react-range";
 
 function FilterChip({ children }: { children: React.ReactNode }) {
   return (
@@ -30,6 +31,7 @@ export default function SearchPage() {
   const [query, setQuery] = React.useState("");
   const [results, setResults] = React.useState<any[]>([]);
   const [error, setError] = React.useState<string | null>(null);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 200]);
 
   async function runSearch() {
     try {
@@ -136,8 +138,8 @@ export default function SearchPage() {
                     <span>Artificial sweeteners</span>
                   </div>
                   {/* Section Devider for "Allergens"*/}
-                  <div className="pt-3 text-sm font-medium text-zinc-900">
-                    Allergens
+                  <div className="pt-1 text-sm font-medium text-zinc-900">
+                    <span>Allergens</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-zinc-700">
                     <input type="checkbox" className="h-4 w-4 accent-emerald-600" />
@@ -163,9 +165,44 @@ export default function SearchPage() {
                 </div>
               </FilterRow>
 
-              <FilterRow label="Budget">
-                <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-600">
-                  Price slider coming soon
+              <FilterRow label="Price range">
+                <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-5">
+
+                  {/* Price display */}
+                  <div className="mb-4 flex justify-between text-sm font-medium text-zinc-900">
+                    <span>${priceRange[0]}</span>
+                    <span>${priceRange[1]}</span>
+                  </div>
+
+                  <Range
+                    values={priceRange}
+                    step={1}
+                    min={0}
+                    max={200}
+                    onChange={(values) => setPriceRange(values as [number, number])}
+                    renderTrack={({ props, children }) => (
+                      <div
+                        {...props}
+                        className="h-2 w-full rounded-full"
+                        style={{
+                          background: getTrackBackground({
+                            values: priceRange,
+                            colors: ["#e5e7eb", "#10b981", "#e5e7eb"],
+                            min: 0,
+                            max: 200,
+                          }),
+                        }}
+                      >
+                        {children}
+                      </div>
+                    )}
+                    renderThumb={({ props }) => (
+                      <div
+                        {...props}
+                        className="h-5 w-5 rounded-full bg-emerald-600 shadow"
+                      />
+                    )}
+                  />
                 </div>
               </FilterRow>
             </div>
