@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 function FilterChip({ children }: { children: React.ReactNode }) {
