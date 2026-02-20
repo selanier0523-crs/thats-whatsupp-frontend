@@ -58,7 +58,13 @@ export default function SearchPage() {
       </div>
 
       {/* Centered, smaller search bar */}
-      <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault(); // prevents page reload
+          runSearch();
+        }}
+        className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm"
+      >
         <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row">
           <input
             className="w-full rounded-xl border border-black/20 bg-white px-4 py-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-emerald-200"
@@ -66,15 +72,15 @@ export default function SearchPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
+
           <button
-            type="button"
+            type="submit"
             className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700"
-            onClick={runSearch}
           >
             Search
           </button>
         </div>
-      </div>
+      </form>
 
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Sidebar filters */}
