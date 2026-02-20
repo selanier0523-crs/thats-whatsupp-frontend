@@ -1,3 +1,5 @@
+import React from "react";
+
 function FilterChip({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs text-zinc-700">
@@ -22,6 +24,23 @@ function FilterRow({
 }
 
 export default function SearchPage() {
+  const API = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  const [query, setQuery] = React.useState("");
+  const [results, setResults] = React.useState<any[]>([]);
+  const [error, setError] = React.useState<string | null>(null);
+
+  async function runSearch() {
+    try {
+      setError(null);
+      const res = await fetch(`${API}/api/search?q=${encodeURIComponent(query)}`);
+      const json = await res.json();
+      setResults(json.results || []);
+    } catch (e) {
+      setError(String(e));
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-end justify-between gap-4">
@@ -43,10 +62,13 @@ export default function SearchPage() {
           <input
             className="w-full rounded-xl border border-black/20 bg-white px-4 py-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-emerald-200"
             placeholder="Search by supplement, ingredient, brand, or goal…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
           />
           <button
             type="button"
             className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700"
+            onClick={runSearch}
           >
             Search
           </button>
@@ -137,24 +159,30 @@ export default function SearchPage() {
               </div>
 
               <div className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-800">
-                0 items
+                {results.length} items
               </div>
             </div>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
-                <div className="text-sm font-semibold text-zinc-900">Example result</div>
-                <p className="mt-1 text-sm text-zinc-600">
-                  This is where supplement cards will appear.
-                </p>
+            {error ? (
+              <div className="mt-5 text-sm text-red-600">{error}</div>
+            ) : (
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                {results.map((r) => (
+                  <div
+                    key={r.id}
+                    className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4"
+                  >
+                    <div className="text-sm font-semibold text-zinc-900">
+                      {r.name}
+                    </div>
+                    <p className="mt-1 text-sm text-zinc-600">
+                      {r.brand} • {r.form}
+                    </p>
+                    <p className="mt-2 text-sm text-zinc-600">{r.description}</p>
+                  </div>
+                ))}
               </div>
-              <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
-                <div className="text-sm font-semibold text-zinc-900">Example result</div>
-                <p className="mt-1 text-sm text-zinc-600">
-                  Filters on the left will narrow these down.
-                </p>
-              </div>
-            </div>
+            )}
 
             <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
               <div className="text-xs font-semibold text-emerald-900">
