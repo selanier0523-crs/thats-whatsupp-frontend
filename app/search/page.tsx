@@ -36,11 +36,11 @@ export default function SearchPage() {
   async function runSearch() {
     try {
       setError(null);
-      const res = await fetch(`${API}/api/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`${API}/api/search?searchkey=${encodeURIComponent(query)}`);
       const json = await res.json();
       setResults(json.results || []);
-    } catch (e) {
-      setError(String(e));
+    } catch (input) {
+      setError(String(input));
     }
   }
 
@@ -61,8 +61,8 @@ export default function SearchPage() {
 
       {/* Centered, smaller search bar */}
       <form
-        onSubmit={(e) => {
-          e.preventDefault(); // prevents page reload
+        onSubmit={(input) => {
+          input.preventDefault(); // prevents page reload
           runSearch();
         }}
         className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm"
@@ -72,7 +72,7 @@ export default function SearchPage() {
             className="w-full rounded-xl border border-black/20 bg-white px-4 py-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-emerald-200"
             placeholder="Search by supplement, ingredient, brand, or goal…"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(input) => setQuery(input.target.value)}
           />
 
           <button
@@ -176,7 +176,7 @@ export default function SearchPage() {
 
                   <Range
                     values={priceRange}
-                    step={1}
+                    step={5}
                     min={0}
                     max={200}
                     onChange={(values) => setPriceRange(values as [number, number])}
