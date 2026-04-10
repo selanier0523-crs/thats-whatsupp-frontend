@@ -36,7 +36,7 @@ export default function SearchPage() {
   async function runSearch() {
     try {
       setError(null);
-      const res = await fetch(`${API}/api/search?searchkey=${encodeURIComponent(query)}`);
+      const res = await fetch(`${API}/api/search?q=${encodeURIComponent(query)}`);
       const json = await res.json();
       setResults(json.results || []);
     } catch (input) {
@@ -50,7 +50,7 @@ export default function SearchPage() {
         <div>
           <h1 className="text-2xl font-semibold text-zinc-900">Search Supplements</h1>
           <p className="mt-1 text-sm text-zinc-600">
-            Search by supplement, ingredient, brand, or goal, then refine with filters.
+            Search by supplement name, brand, or supplement type, then refine with filters.
           </p>
         </div>
 
@@ -70,7 +70,7 @@ export default function SearchPage() {
         <div className="mx-auto flex max-w-3xl flex-col gap-3 sm:flex-row">
           <input
             className="w-full rounded-xl border border-black/20 bg-white px-4 py-3 text-sm text-zinc-900 outline-none placeholder:text-zinc-400 focus:ring-2 focus:ring-emerald-200"
-            placeholder="Search by supplement, ingredient, brand, or goal…"
+            placeholder="Search by supplement name, brand, or supplement type…"
             value={query}
             onChange={(input) => setQuery(input.target.value)}
           />
@@ -216,7 +216,7 @@ export default function SearchPage() {
               <div>
                 <div className="text-sm font-semibold text-zinc-900">Results</div>
                 <p className="mt-2 text-sm text-zinc-600">
-                  The dataset is just a sample for now, but this shows that we can access the database! Search for things like "multivitamin" or "magnesium" to test it.
+                  The dataset is just a sample for now, but this shows that we can access the database. Search for things like "multivitamin" or "magnesium" to test it.
                 </p>
               </div>
 
@@ -234,13 +234,43 @@ export default function SearchPage() {
                     key={r.id}
                     className="rounded-2xl border border-zinc-200 bg-zinc-50 p-4"
                   >
+                    {r.image && (
+                      <img
+                        src={r.image}
+                        alt={r.product_name}
+                        className="mb-3 h-40 w-full rounded-xl object-contain bg-white"
+                      />
+                    )}
                     <div className="text-sm font-semibold text-zinc-900">
-                      {r.name}
+                      {r.product_name}
                     </div>
                     <p className="mt-1 text-sm text-zinc-600">
-                      {r.brand} • {r.form}
+                      {r.brand} • {r.supplement_type}
                     </p>
                     <p className="mt-2 text-sm text-zinc-600">{r.description}</p>
+
+                    {r.supplement_sizes?.length > 0 && (
+                      <div className="mt-3 space-y-2">
+                        {r.supplement_sizes.map((sizeOption: any, index: number) => (
+                          <div
+                            key={index}
+                            className="rounded-xl border border-zinc-200 bg-white p-3 text-sm text-zinc-700"
+                          >
+                            <div>{sizeOption.size_numeric} {sizeOption.size}</div>
+                            <div>${Number(sizeOption.price).toFixed(2)}</div>
+                            <div>{sizeOption.price_per}</div>
+                            <a
+                              href={sizeOption.link}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-emerald-700 underline break-all"
+                            >
+                              {sizeOption.link}
+                            </a>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
