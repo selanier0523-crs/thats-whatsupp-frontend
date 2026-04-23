@@ -39,6 +39,7 @@ export default function SearchPage() {
       const res = await fetch(`${API}/api/search?q=${encodeURIComponent(query)}`);
       const json = await res.json();
       setResults(json.results || []);
+      console.log("API VALUE:", API);
     } catch (input) {
       setError(String(input));
     }
